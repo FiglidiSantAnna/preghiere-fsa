@@ -1,4 +1,4 @@
-const CACHE="preghiere-fsa-v2";
+const CACHE="preghiere-fsa-v3";
 const FILES=["./","./index.html","./manifest.json",
  "./icons/icon-72.png","./icons/icon-96.png","./icons/icon-128.png","./icons/icon-144.png",
  "./icons/icon-152.png","./icons/icon-167.png","./icons/icon-180.png","./icons/icon-192.png",
