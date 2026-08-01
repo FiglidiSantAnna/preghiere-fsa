@@ -47,7 +47,7 @@ O aplicativo contém o Devocionário, o Vademecum e o Pensamento do dia da Beata
 ### Se você tem iPhone ou iPad
 
 1. Abra este endereço com o **Safari** *(importante: não com o Chrome)*:
-   👉 **[ENDEREÇO]**
+   👉 **https://FiglidiSantAnna.github.io/preghiere-fsa/**
 2. Em baixo, toque no ícone **Partilhar** — o quadrado com a seta para cima ⬆️
 3. Percorra a lista e toque em **«Adicionar ao Ecrã Principal»**
 4. Toque em **«Adicionar»**, em cima à direita
@@ -55,7 +55,7 @@ O aplicativo contém o Devocionário, o Vademecum e o Pensamento do dia da Beata
 ### Se você tem um telemóvel Android
 
 1. Abra este endereço com o **Chrome**:
-   👉 **[ENDEREÇO]**
+   👉 **https://FiglidiSantAnna.github.io/preghiere-fsa/**
 2. Após alguns segundos aparecerá em baixo o botão dourado **«Instalar Preghiere FSA»**: toque nele.
    *Se não aparecer*, toque nos **três pontos ⋮** em cima à direita e escolha **«Instalar app»**.
 3. Confirme tocando em **«Instalar»**
@@ -77,7 +77,7 @@ La aplicación contiene el Devocionario, el Vademecum y el Pensamiento del día 
 ### Si tienes un iPhone o iPad
 
 1. Abre esta dirección con **Safari** *(importante: no con Chrome)*:
-   👉 **[DIRECCIÓN]**
+   👉 **https://FiglidiSantAnna.github.io/preghiere-fsa/**
 2. Abajo, toca el icono **Compartir** — el cuadrado con la flecha hacia arriba ⬆️
 3. Desplázate y toca **«Añadir a pantalla de inicio»**
 4. Toca **«Añadir»**, arriba a la derecha
@@ -85,7 +85,7 @@ La aplicación contiene el Devocionario, el Vademecum y el Pensamiento del día 
 ### Si tienes un teléfono Android
 
 1. Abre esta dirección con **Chrome**:
-   👉 **[DIRECCIÓN]**
+   👉 **https://FiglidiSantAnna.github.io/preghiere-fsa/**
 2. Tras unos segundos aparecerá abajo el botón dorado **«Instalar Preghiere FSA»**: tócalo.
    *Si no aparece*, toca los **tres puntos ⋮** arriba a la derecha y elige **«Instalar aplicación»**.
 3. Confirma tocando **«Instalar»**
@@ -107,7 +107,7 @@ The app contains the Devotional, the Vademecum and the Thought of the Day of Ble
 ### If you have an iPhone or iPad
 
 1. Open this address with **Safari** *(important: not with Chrome)*:
-   👉 **[ADDRESS]**
+   👉 **https://FiglidiSantAnna.github.io/preghiere-fsa/**
 2. At the bottom, tap the **Share** icon — the square with the arrow pointing up ⬆️
 3. Scroll down and tap **«Add to Home Screen»**
 4. Tap **«Add»** at the top right
@@ -115,7 +115,7 @@ The app contains the Devotional, the Vademecum and the Thought of the Day of Ble
 ### If you have an Android phone
 
 1. Open this address with **Chrome**:
-   👉 **[ADDRESS]**
+   👉 **https://FiglidiSantAnna.github.io/preghiere-fsa/**
 2. After a few seconds a golden button will appear at the bottom: **«Install Preghiere FSA»**. Tap it.
    *If it does not appear*, tap the **three dots ⋮** at the top right and choose **«Install app»**.
 3. Confirm by tapping **«Install»**
