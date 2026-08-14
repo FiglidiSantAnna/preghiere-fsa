@@ -1,4 +1,4 @@
-const CACHE="preghiere-fsa-v2";
+const CACHE="preghiere-fsa-v3";
 const FILES=["./","./index.html","./manifest.json",
  "./icons/icon-72.png","./icons/icon-96.png","./icons/icon-128.png","./icons/icon-144.png",
  "./icons/icon-152.png","./icons/icon-167.png","./icons/icon-180.png","./icons/icon-192.png",
@@ -11,6 +11,20 @@ self.addEventListener("activate",e=>{
 });
 self.addEventListener("fetch",e=>{
   if(e.request.method!=="GET") return;
+  const url=new URL(e.request.url);
+  const isPagina = e.request.mode==="navigate" || url.pathname.endsWith("/") || url.pathname.endsWith("/index.html");
+  if(isPagina){
+    // pagina principale: prima la rete (cosi' gli aggiornamenti si vedono subito),
+    // la cache resta come riserva quando si e' offline
+    e.respondWith(
+      fetch(e.request).then(res=>{
+        const copy=res.clone();
+        caches.open(CACHE).then(c=>c.put("./index.html",copy)).catch(()=>{});
+        return res;
+      }).catch(()=> caches.match("./index.html").then(r=> r || caches.match("./")))
+    );
+    return;
+  }
   e.respondWith(
     caches.match(e.request).then(r=> r || fetch(e.request).then(res=>{
       const copy=res.clone();
