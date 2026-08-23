@@ -1,4 +1,4 @@
-const CACHE="preghiere-fsa-v3";
+const CACHE="preghiere-fsa-v4";
 const FILES=["./","./index.html","./manifest.json",
  "./icons/icon-72.png","./icons/icon-96.png","./icons/icon-128.png","./icons/icon-144.png",
  "./icons/icon-152.png","./icons/icon-167.png","./icons/icon-180.png","./icons/icon-192.png",
@@ -14,14 +14,19 @@ self.addEventListener("fetch",e=>{
   const url=new URL(e.request.url);
   const isPagina = e.request.mode==="navigate" || url.pathname.endsWith("/") || url.pathname.endsWith("/index.html");
   if(isPagina){
-    // pagina principale: prima la rete (cosi' gli aggiornamenti si vedono subito),
-    // la cache resta come riserva quando si e' offline
+    // pagina principale: file ormai molto pesante (16+ MB), quindi si apre
+    // SUBITO dalla cache (stale-while-revalidate) invece di aspettare il
+    // download completo dalla rete ad ogni apertura. In parallelo si scarica
+    // la versione aggiornata e si salva in cache per la prossima apertura.
     e.respondWith(
-      fetch(e.request).then(res=>{
-        const copy=res.clone();
-        caches.open(CACHE).then(c=>c.put("./index.html",copy)).catch(()=>{});
-        return res;
-      }).catch(()=> caches.match("./index.html").then(r=> r || caches.match("./")))
+      caches.match("./index.html").then(cached=>{
+        const network = fetch(e.request).then(res=>{
+          const copy=res.clone();
+          caches.open(CACHE).then(c=>c.put("./index.html",copy)).catch(()=>{});
+          return res;
+        }).catch(()=> null);
+        return cached || network || caches.match("./");
+      })
     );
     return;
   }
