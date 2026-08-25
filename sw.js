@@ -1,5 +1,4 @@
-importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
-const CACHE="preghiere-fsa-v5";
+const CACHE="preghiere-fsa-v6";
 const FILES=["./","./index.html","./manifest.json",
  "./icons/icon-72.png","./icons/icon-96.png","./icons/icon-128.png","./icons/icon-144.png",
  "./icons/icon-152.png","./icons/icon-167.png","./icons/icon-180.png","./icons/icon-192.png",

@@ -4,35 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Preghiere FSA — Istituto Figli di Sant'Anna</title>
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  window.__onesignalReady = false;
-  window.__onesignalError = null;
-  OneSignalDeferred.push(async function(OneSignal) {
-    try {
-      await OneSignal.init({
-        appId: "f5ae550b-cbcc-415e-932a-0df938ff86ed",
-        serviceWorkerPath: "/preghiere-fsa/sw.js",
-        serviceWorkerParam: { scope: "/preghiere-fsa/" },
-        notifyButton: { enable: false }
-      });
-      window.__OneSignal = OneSignal;
-      window.__onesignalReady = true;
-    } catch (e) {
-      window.__onesignalError = (e && (e.message || String(e))) || "errore sconosciuto in OneSignal.init()";
-      console.error("OneSignal init error:", e);
-    }
-    if (typeof render === "function") { try { render(); } catch (e) {} }
-  });
-  setTimeout(function () {
-    if (!window.__onesignalReady && !window.__onesignalError) {
-      window.__onesignalError = "timeout: l'SDK OneSignal non ha risposto entro 15s (possibile blocco di rete verso cdn.onesignal.com)";
-      console.error("OneSignal:", window.__onesignalError);
-      if (typeof render === "function") { try { render(); } catch (e) {} }
-    }
-  }, 15000);
-</script>
 <style>
 :root{
   --blu:#123456; --blu-scuro:#0A1E38; --blu-chiaro:#1C4C7C;
@@ -532,7 +503,7 @@ const I18N = {
    cat:{solennita:"Solennità",festa:"Festa",ricordo:"Ricordo di famiglia",commemorazione:"Commemorazione",
         triduo:"Triduo",novena:"Novena",pia:"Pia pratica",messa:"Messa",messa_votiva:"Messa votiva",
         veglia:"Veglia",litanie:"Litanie",ordinario:"Ordinario",vademecum:"Vademecum",capitolo:"Capitolo Generale"},
-   ics_btn:"Aggiungi promemoria al Calendario", ics_note:"Crea un file da importare nel Calendario del dispositivo: ogni celebrazione con avviso il giorno prima (ore 9) e la mattina stessa (ore 8).", notif_btn:"Attiva notifiche di aggiornamento", notif_on:"Notifiche attive ✓", notif_note:"Ricevi un avviso quando l’app viene aggiornata con nuovi contenuti.", notif_wait:"Attendere…", notif_loading:"Caricamento…", notif_unavail:"Notifiche non disponibili", notif_err:"Non è stato possibile attivare le notifiche. Controlla la connessione a Internet, assicurati di aver aperto l’app dall’icona nella schermata Home e riprova tra qualche secondo.", ultsab:"Ultimo sabato di maggio", sabdef:"Primo sabato di novembre (dopo il 2)", quaresima:"Venerdì di Quaresima",
+   ics_btn:"Aggiungi promemoria al Calendario", ics_note:"Crea un file da importare nel Calendario del dispositivo: ogni celebrazione con avviso il giorno prima (ore 9) e la mattina stessa (ore 8).", ultsab:"Ultimo sabato di maggio", sabdef:"Primo sabato di novembre (dopo il 2)", quaresima:"Venerdì di Quaresima",
    dal:"dal", al:"al"},
  pt:{app:"Preghiere FSA", oggi:"Hoje", cal:"Calendário", cerca:"Buscar", libro:"Livro",
    oggi_nulla:"Hoje não há celebração própria do Instituto.",
@@ -547,7 +518,7 @@ const I18N = {
    cat:{solennita:"Solenidade",festa:"Festa",ricordo:"Recordação de família",commemorazione:"Comemoração",
         triduo:"Tríduo",novena:"Novena",pia:"Prática piedosa",messa:"Missa",messa_votiva:"Missa votiva",
         veglia:"Vigília",litanie:"Ladainha",ordinario:"Ordinário",vademecum:"Vademecum",capitolo:"Capítulo Geral"},
-   ics_btn:"Adicionar lembretes ao Calendário", ics_note:"Cria um arquivo para importar no Calendário do dispositivo: cada celebração com aviso na véspera (9h) e na própria manhã (8h).", notif_btn:"Ativar notificações de atualização", notif_on:"Notificações ativas ✓", notif_note:"Receba um aviso quando o app for atualizado com novos conteúdos.", notif_wait:"Aguarde…", notif_loading:"Carregando…", notif_unavail:"Notificações indisponíveis", notif_err:"Não foi possível ativar as notificações. Verifique a conexão à internet, confirme que abriu o app pelo ícone na tela inicial e tente novamente em alguns segundos.", ultsab:"Último sábado de maio", sabdef:"Primeiro sábado de novembro (após o dia 2)", quaresima:"Sextas-feiras da Quaresma",
+   ics_btn:"Adicionar lembretes ao Calendário", ics_note:"Cria um arquivo para importar no Calendário do dispositivo: cada celebração com aviso na véspera (9h) e na própria manhã (8h).", ultsab:"Último sábado de maio", sabdef:"Primeiro sábado de novembro (após o dia 2)", quaresima:"Sextas-feiras da Quaresma",
    dal:"de", al:"a"},
  en:{app:"Preghiere FSA", oggi:"Today", cal:"Calendar", cerca:"Search", libro:"Book",
    oggi_nulla:"No proper celebration of the Institute is scheduled today.",
@@ -562,7 +533,7 @@ const I18N = {
    cat:{solennita:"Solemnity",festa:"Feast",ricordo:"Family remembrance",commemorazione:"Commemoration",
         triduo:"Triduum",novena:"Novena",pia:"Pious practice",messa:"Mass",messa_votiva:"Votive Mass",
         veglia:"Vigil",litanie:"Litany",ordinario:"Ordinary",vademecum:"Vademecum",capitolo:"General Chapter"},
-   ics_btn:"Add reminders to Calendar", ics_note:"Creates a file to import into your device Calendar: every celebration with an alert the day before (9 am) and the same morning (8 am).", notif_btn:"Enable update notifications", notif_on:"Notifications on ✓", notif_note:"Get notified when the app is updated with new content.", notif_wait:"Please wait…", notif_loading:"Loading…", notif_unavail:"Notifications unavailable", notif_err:"Notifications could not be enabled. Check your internet connection, make sure you opened the app from the Home Screen icon, and try again in a few seconds.", ultsab:"Last Saturday of May", sabdef:"First Saturday of November (after the 2nd)", quaresima:"Fridays of Lent",
+   ics_btn:"Add reminders to Calendar", ics_note:"Creates a file to import into your device Calendar: every celebration with an alert the day before (9 am) and the same morning (8 am).", ultsab:"Last Saturday of May", sabdef:"First Saturday of November (after the 2nd)", quaresima:"Fridays of Lent",
    dal:"from", al:"to"},
  es:{app:"Preghiere FSA", oggi:"Hoy", cal:"Calendario", cerca:"Buscar", libro:"Libro",
    oggi_nulla:"Hoy no hay celebración propia del Instituto.",
@@ -577,7 +548,7 @@ const I18N = {
    cat:{solennita:"Solemnidad",festa:"Fiesta",ricordo:"Recuerdo de familia",commemorazione:"Conmemoración",
         triduo:"Triduo",novena:"Novena",pia:"Práctica piadosa",messa:"Misa",messa_votiva:"Misa votiva",
         veglia:"Vigilia",litanie:"Letanías",ordinario:"Ordinario",vademecum:"Vademecum",capitolo:"Capítulo General"},
-   ics_btn:"Añadir recordatorios al Calendario", ics_note:"Crea un archivo para importar en el Calendario del dispositivo: cada celebración con aviso la víspera (9 h) y la misma mañana (8 h).", notif_btn:"Activar notificaciones de actualización", notif_on:"Notificaciones activas ✓", notif_note:"Recibe un aviso cuando la app se actualice con nuevos contenidos.", notif_wait:"Espera…", notif_loading:"Cargando…", notif_unavail:"Notificaciones no disponibles", notif_err:"No se pudieron activar las notificaciones. Comprueba la conexión a Internet, asegúrate de haber abierto la app desde el icono en la pantalla de inicio y vuelve a intentarlo en unos segundos.", ultsab:"Último sábado de mayo", sabdef:"Primer sábado de noviembre (después del 2)", quaresima:"Viernes de Cuaresma",
+   ics_btn:"Añadir recordatorios al Calendario", ics_note:"Crea un archivo para importar en el Calendario del dispositivo: cada celebración con aviso la víspera (9 h) y la misma mañana (8 h).", ultsab:"Último sábado de mayo", sabdef:"Primer sábado de noviembre (después del 2)", quaresima:"Viernes de Cuaresma",
    dal:"del", al:"al"}
 };
 Object.assign(I18N.it,{fav:"Preferiti",fav_vuoto:"Nessun preferito. Apri una preghiera e tocca ☆ per salvarla.",copiato:"Testo copiato negli appunti."});
@@ -11997,16 +11968,6 @@ function vOggi(){
   h += `<div class="aree"><button data-area="dev">✠ ${t.vol_dev}</button><button data-area="vad">✠ ${t.vol_vad}</button><button data-area="fio">✠ ${t.vol_fio}</button><button data-area="cap">✠ ${t.vol_cap}</button></div>`;
   h += `<div class="ics-box"><button id="ics-btn" class="ics-btn">🔔 ${t.ics_btn}</button>
         <div class="ics-note">${t.ics_note}</div></div>`;
-  { const notifReady = !!window.__onesignalReady;
-    const notifErr = window.__onesignalError;
-    const notifOn = notifStatoOk();
-    let notifLabel, notifDisabled, notifNote;
-    if(notifOn){ notifLabel = t.notif_on; notifDisabled = true; notifNote = t.notif_note; }
-    else if(notifErr){ notifLabel = t.notif_unavail || "Notifiche non disponibili"; notifDisabled = true; notifNote = (t.notif_note||"") + " — " + notifErr; }
-    else if(notifReady){ notifLabel = t.notif_btn; notifDisabled = false; notifNote = t.notif_note; }
-    else { notifLabel = t.notif_loading || "Caricamento…"; notifDisabled = true; notifNote = t.notif_note; }
-    h += `<div class="ics-box"><button id="notif-btn" class="ics-btn"${notifDisabled?' disabled':''}>🔔 ${notifLabel}</button>
-        <div class="ics-note">${notifNote}</div></div>`; }
   return h;
 }
 function vCal(){
@@ -12217,43 +12178,6 @@ function buildICS(){
   L.push("END:VCALENDAR");
   return L.join("\r\n");
 }
-function notifStatoOk(){
-  try{
-    const OS = window.__OneSignal || window.OneSignal;
-    return !!(OS && OS.Notifications && OS.Notifications.permission);
-  }catch(e){ return false; }
-}
-function attivaNotifiche(){
-  const btn = document.getElementById("notif-btn");
-  const t = T();
-  const OS = window.__OneSignal || window.OneSignal;
-  if(!window.__onesignalReady || !OS || !OS.Notifications){
-    alert(t.notif_err || "Non è stato possibile attivare le notifiche. Controlla la connessione a Internet, assicurati di aver aperto l'app dall'icona nella schermata Home e riprova tra qualche secondo.");
-    return;
-  }
-  if(btn){ btn.disabled = true; btn.textContent = "🔔 " + (t.notif_wait||"Attendere…"); }
-  let risolto = false;
-  const timeout = setTimeout(()=>{
-    if(risolto) return;
-    risolto = true;
-    console.error("OneSignal: timeout in attesa della risposta al permesso");
-    alert(t.notif_err || "Non è stato possibile attivare le notifiche. Controlla la connessione a Internet e riprova tra qualche secondo.");
-    render();
-  }, 9000);
-  // Chiamata SINCRONA, dentro il gestore del click: su iOS Safari la richiesta di
-  // permesso deve partire direttamente dal gesto dell'utente, senza passare per
-  // una coda/callback asincrona, altrimenti Safari la ignora silenziosamente.
-  OS.Notifications.requestPermission().then(()=>{
-    if(risolto) return;
-    risolto = true; clearTimeout(timeout); render();
-  }).catch(e=>{
-    console.error("OneSignal:", e);
-    if(risolto) return;
-    risolto = true; clearTimeout(timeout);
-    alert(t.notif_err || "Non è stato possibile attivare le notifiche. Controlla la connessione a Internet e riprova tra qualche secondo.");
-    render();
-  });
-}
 function scaricaICS(){
   const blob=new Blob([buildICS()],{type:"text/calendar;charset=utf-8"});
   const a=document.createElement("a");
@@ -12270,7 +12194,6 @@ document.addEventListener("click",ev=>{
   const m=ev.target.closest("[data-mese]"); if(m){meseSel=+m.dataset.mese; render(); return;}
   const vl=ev.target.closest("[data-vol]"); if(vl){libroVol=vl.dataset.vol; render(); return;}
   if(ev.target.closest("#ics-btn")){scaricaICS(); return;}
-  if(ev.target.closest("#notif-btn")){attivaNotifiche(); return;}
   const pm=ev.target.closest("[data-pmese]"); if(pm){apriPensieri(+pm.dataset.pmese); return;}
   const pz=ev.target.closest("[data-pensieri]"); if(pz){apriPensieri(+pz.dataset.pensieri); return;}
   const vg=ev.target.closest("[data-vangelo]"); if(vg){apriVangelo(vg.dataset.vangelo); return;}
