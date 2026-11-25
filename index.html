@@ -12567,6 +12567,316 @@ body.notte #fsa-guida .gnext{background:var(--oro);color:#151a24;border-color:va
 })();
 </script>
 
+<style id="fsa-novita2-css">
+.let-top{flex-wrap:wrap;row-gap:8px;gap:6px 6px}
+.let-top button{padding:5px 10px}
+.let-top .sp{flex:1 1 8px;min-width:0}
+.let-top #tts-timer.on{color:var(--oro-chiaro);border-color:var(--oro)}
+.fsa-snip{font-size:14px;line-height:1.5;color:var(--inchiostro);opacity:.85;margin:6px 0 8px;text-align:left}
+.fsa-snip mark{background:var(--oro-pallido,#F3E7C4);color:inherit;padding:0 2px;border-radius:2px}
+body.notte .fsa-snip mark{background:#5b4c1c}
+.fsa-rhead{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro);margin:18px 14px 8px}
+.fsa-rcard{display:block;margin:0 14px 10px;padding:12px 14px;background:var(--carta);border:1px solid var(--linea,#ddd);border-radius:8px;cursor:pointer}
+.fsa-rcard small{display:block;font-size:11px;color:var(--oro);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.fsa-rmore{margin:4px 14px 14px;font-size:13px;font-style:italic;opacity:.7}
+details.fsa-avvisi{margin:18px 14px 8px;border:1px solid var(--linea,#ddd);border-radius:10px;background:var(--carta)}
+details.fsa-avvisi>summary{padding:12px 14px;cursor:pointer;font-size:15px;color:var(--blu);list-style:none}
+details.fsa-avvisi>summary::-webkit-details-marker{display:none}
+details.fsa-avvisi[open]>summary{border-bottom:1px solid var(--linea,#ddd)}
+details.fsa-avvisi .ics-box{margin:14px 0}
+.fsa-nota{margin:30px 0 10px;padding:14px 14px 10px;border:1px solid var(--oro);border-radius:10px;background:var(--carta);text-align:left}
+.fsa-nota-tit{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro);margin-bottom:8px}
+.fsa-nota textarea{width:100%;box-sizing:border-box;min-height:84px;padding:10px;font:inherit;font-size:16px;line-height:1.45;color:var(--inchiostro);background:transparent;border:1px solid var(--linea,#ccc);border-radius:6px;resize:vertical}
+.fsa-nota-act{display:flex;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap}
+.fsa-nota-act button{font-family:inherit;font-size:14px;padding:7px 14px;color:var(--blu);background:transparent;border:1px solid var(--oro);border-radius:999px;cursor:pointer}
+.fsa-nota-act button.on{background:var(--oro);color:#1a1a1a}
+.fsa-nota-ok{font-size:12px;opacity:.7;font-style:italic}
+a.fsa-scritti{display:block;margin:14px 0 0;padding:12px 14px;text-align:center;font-size:15px;color:var(--blu);border:1px solid var(--linea,#ccc);border-radius:10px;text-decoration:none;background:var(--carta)}
+.fsa-nitem{margin:0 14px 10px;padding:12px 14px;background:var(--carta);border:1px solid var(--oro);border-radius:8px;cursor:pointer}
+.fsa-nitem b{display:block;color:var(--blu);font-weight:600;margin-bottom:4px}
+.fsa-nitem span{display:block;font-size:14px;line-height:1.45;opacity:.85;white-space:pre-wrap;text-align:left}
+</style>
+<script id="fsa-novita2">
+(function(){
+  "use strict";
+  var URL_SCRITTI="https://figlidisantanna.github.io/scritti-madre-rosa/";
+  var S={
+    it:{avvisi:"Avvisi e promemoria",ris_celeb:"Celebrazioni e preghiere",ris_pens:"Pensieri di Madre Rosa",altri:"altri risultati: affina la ricerca",
+        nota:"La mia nota",nota_ph:"Scrivi qui una nota personale. Resta solo su questo telefono.",segna:"Tra i miei passi",segnato:"Tra i miei passi ✓",salvato:"Salvato ✓",
+        mie:"I miei passi e note",scritti:"Leggi gli scritti di Madre Rosa nell’app Scritti FSA ⟶",timer:"Timer di spegnimento",pens_mese:"Pensieri del mese"},
+    pt:{avvisi:"Avisos e lembretes",ris_celeb:"Celebrações e orações",ris_pens:"Pensamentos de Madre Rosa",altri:"mais resultados: refine a busca",
+        nota:"Minha nota",nota_ph:"Escreva aqui uma nota pessoal. Fica só neste telefone.",segna:"Entre meus passos",segnato:"Entre meus passos ✓",salvato:"Salvo ✓",
+        mie:"Meus passos e notas",scritti:"Leia os escritos de Madre Rosa no app Escritos FSA ⟶",timer:"Timer para desligar",pens_mese:"Pensamentos do mês"},
+    es:{avvisi:"Avisos y recordatorios",ris_celeb:"Celebraciones y oraciones",ris_pens:"Pensamientos de Madre Rosa",altri:"más resultados: afina la búsqueda",
+        nota:"Mi nota",nota_ph:"Escribe aquí una nota personal. Queda solo en este teléfono.",segna:"Entre mis pasos",segnato:"Entre mis pasos ✓",salvato:"Guardado ✓",
+        mie:"Mis pasos y notas",scritti:"Lee los escritos de Madre Rosa en la app Escritos FSA ⟶",timer:"Temporizador de apagado",pens_mese:"Pensamientos del mes"},
+    en:{avvisi:"Alerts and reminders",ris_celeb:"Celebrations and prayers",ris_pens:"Thoughts of Mother Rosa",altri:"more results: refine your search",
+        nota:"My note",nota_ph:"Write a personal note here. It stays only on this phone.",segna:"Add to my passages",segnato:"In my passages ✓",salvato:"Saved ✓",
+        mie:"My passages and notes",scritti:"Read Mother Rosa’s writings in the Writings FSA app ⟶",timer:"Sleep timer",pens_mese:"Thoughts of the month"}
+  };
+  function L(){ return S[(typeof lingua!=="undefined"&&S[lingua])?lingua:"it"]; }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  var dec=document.createElement("textarea");
+  function decode(h){ dec.innerHTML=h; return dec.value; }
+
+  /* ===== Timer di spegnimento ===== */
+  var top=document.querySelector(".let-top"), vel=document.getElementById("tts-vel");
+  if(top&&vel){
+    var tb=document.createElement("button"); tb.id="tts-timer"; tb.type="button"; tb.textContent="☾";
+    tb.setAttribute("aria-label",L().timer); vel.insertAdjacentElement("afterend",tb);
+    var STEP=[0,15,30,60], si=0, tmo=null;
+    function stopTTS(){
+      try{ var st=document.getElementById("tts-stop"); if(st) st.click(); }catch(e){}
+      try{ window.speechSynthesis.cancel(); }catch(e){}
+      si=0; tb.textContent="☾"; tb.classList.remove("on");
+    }
+    tb.addEventListener("click",function(){
+      si=(si+1)%STEP.length; clearTimeout(tmo); tb.setAttribute("aria-label",L().timer);
+      if(STEP[si]){ tb.textContent="☾ "+STEP[si]+"′"; tb.classList.add("on"); tmo=setTimeout(stopTTS,STEP[si]*60000); window.__fsaTimerMs=STEP[si]*60000; }
+      else { tb.textContent="☾"; tb.classList.remove("on"); }
+    });
+    window.__fsaTimerStop=stopTTS;
+  }
+
+  /* ===== Ricerca unica con frase evidenziata ===== */
+  function nmap(text){ // testo normalizzato + mappa verso l'originale
+    var out="", map=[], i, c, n, j;
+    for(i=0;i<text.length;i++){
+      c=text[i]; n=c.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+      for(j=0;j<n.length;j++){ out+=n[j]; map.push(i); }
+    }
+    return {n:out,m:map};
+  }
+  function snippet(plain,nq){
+    var r=nmap(plain), p=r.n.indexOf(nq); if(p<0) return "";
+    var a=r.m[p], b=r.m[Math.min(p+nq.length-1,r.m.length-1)]+1;
+    var from=Math.max(0,a-70), to=Math.min(plain.length,b+90);
+    if(from>0){ var sp=plain.indexOf(" ",from); if(sp>-1&&sp<a) from=sp+1; }
+    if(to<plain.length){ var sp2=plain.lastIndexOf(" ",to); if(sp2>b) to=sp2; }
+    return (from>0?"… ":"")+esc(plain.slice(from,a))+"<mark>"+esc(plain.slice(a,b))+"</mark>"+esc(plain.slice(b,to))+(to<plain.length?" …":"");
+  }
+  var cacheBody={};
+  function bodyPlain(e,l){
+    var k=e.id+"|"+l; if(cacheBody[k]!==undefined) return cacheBody[k];
+    var raw=e.body&&e.body[l]; var v=raw?decode(String(raw).replace(/<\/(p|h\d|li|div)>/gi," ").replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ")).replace(/\s+/g," ").trim():"";
+    cacheBody[k]=v; return v;
+  }
+  var _vc=window.vCerca;
+  window.vCerca=function(q){
+    q=q||""; var qq=q.trim();
+    var t=T(), s=L();
+    var h='<div class="cerca"><input id="q" type="search" placeholder="'+t.cerca_ph+'" value="'+q.replace(/"/g,"&quot;")+'" autocomplete="off"></div>';
+    if(!qq) return h;
+    var nq=nmap(qq).n; if(!nq) return h;
+    var tot=0, parts=[];
+    // 1) celebrazioni e preghiere
+    var ris=[];
+    DATA.entries.forEach(function(e){
+      var nomi=nmap(LINGUE.map(function(l){return (e.title&&e.title[l])||"";}).join(" ")).n;
+      var dl=nmap(etichettaData(e)||"").n;
+      var snip="", hit=nomi.indexOf(nq)>-1||dl.indexOf(nq)>-1;
+      var order=[lingua].concat(LINGUE.filter(function(l){return l!==lingua;}));
+      for(var i=0;i<order.length&&!snip;i++){ var pl=bodyPlain(e,order[i]); if(pl){ var sn=snippet(pl,nq); if(sn){ snip=sn; hit=true; } } }
+      if(hit) ris.push([e,snip]);
+    });
+    if(ris.length){
+      parts.push('<div class="fsa-rhead">'+esc(s.ris_celeb)+' · '+ris.length+'</div>');
+      ris.slice(0,40).forEach(function(r){
+        var c=card(r[0],false);
+        if(r[1]) c=c.replace("</h3>","</h3><div class=\"fsa-snip\">"+r[1]+"</div>");
+        parts.push(c);
+      });
+      if(ris.length>40) parts.push('<div class="fsa-rmore">'+esc(s.altri)+'</div>');
+      tot+=ris.length;
+    }
+    // 2) pensieri di Madre Rosa (volume + pensieri del mese/feste)
+    var pr=[];
+    try{
+      FIORI.D.forEach(function(d,idx){
+        if(pr.length>=60) return;
+        var txt=d[lingua]||d.it||""; var sn=snippet(decode(String(txt).replace(/<[^>]+>/g," ")),nq);
+        if(!sn){ var tit=(FIORI.S[d.s]&&(FIORI.S[d.s][lingua]||FIORI.S[d.s].it))||""; if(nmap(tit).n.indexOf(nq)>-1) sn=esc(decode(String(txt).replace(/<[^>]+>/g," ")).slice(0,160))+" …"; }
+        if(sn) pr.push({k:"fio",i:idx,sn:sn,r:d.r||"",tit:(FIORI.S[d.s]&&(FIORI.S[d.s][lingua]||FIORI.S[d.s].it))||""});
+      });
+      Object.keys(PENSIERI).forEach(function(m){
+        (PENSIERI[m]||[]).forEach(function(it){
+          if(pr.length>=80) return;
+          var sn=snippet(decode(String((it.t[lingua]||it.t.it)||"")),nq);
+          if(sn) pr.push({k:"pm",i:+m,sn:sn,r:it.f||"",tit:titoloMese(+m)});
+        });
+      });
+    }catch(e){}
+    if(pr.length){
+      parts.push('<div class="fsa-rhead">'+esc(s.ris_pens)+' · '+pr.length+(pr.length>=60?'+':'')+'</div>');
+      pr.slice(0,25).forEach(function(r){
+        var attr=r.k==="fio"?'data-fio="'+r.i+'"':'data-pensieri="'+r.i+'"';
+        parts.push('<div class="fsa-rcard" '+attr+'><small>'+esc(r.tit)+'</small><div class="fsa-snip" style="margin:0">«'+r.sn+'»</div>'+(r.r?'<div class="fsa-snip" style="margin:4px 0 0;opacity:.6">— '+esc(r.r)+'</div>':'')+'</div>');
+      });
+      if(pr.length>25) parts.push('<div class="fsa-rmore">'+esc(s.altri)+'</div>');
+      tot+=pr.length;
+    }
+    if(!tot) parts.push('<div class="vuoto">'+t.nessun_ris+'</div>');
+    return h+parts.join("");
+  };
+
+  /* ===== Note personali e «i miei passi» ===== */
+  var KN="fsa-note", cur=null;
+  function loadN(){ try{ return JSON.parse(lsGet(KN)||"{}")||{}; }catch(e){ return {}; } }
+  function saveN(o){ lsSet(KN,JSON.stringify(o)); }
+  function setCur(k,key,title){ cur={k:k,key:key,title:title}; }
+  function titoloFiore(i){ try{ var d=FIORI.D[i], sec=FIORI.S[d.s]; return (sec[lingua]||sec.it); }catch(e){ return "Pensiero"; } }
+  function titoloVangelo(key){ try{ var V=vangeloDati(key); return decode(String(V.giorno||"Vangelo")).replace(/\s+/g," ").trim(); }catch(e){ return "Vangelo"; } }
+
+  function notaHtml(){
+    var s=L(), N=loadN()[cur.key]||{}, segnato=false;
+    if(cur.k.t==="e") segnato=PREF.has(cur.k.id); else segnato=!!N.s;
+    var h='<div class="fsa-nota" id="fsa-nota"><div class="fsa-nota-tit">✎ '+esc(s.nota)+'</div>'+
+      '<textarea id="fsa-nota-txt" placeholder="'+esc(s.nota_ph)+'">'+esc(N.x||"")+'</textarea>'+
+      '<div class="fsa-nota-act"><button type="button" id="fsa-segna" class="'+(segnato?'on':'')+'">'+(segnato?esc(s.segnato):'☆ '+esc(s.segna))+'</button><span class="fsa-nota-ok" id="fsa-nota-ok"></span></div>';
+    if(cur.k.t==="p"||cur.k.t==="f") h+='<a class="fsa-scritti" href="'+URL_SCRITTI+'" target="_blank" rel="noopener">'+esc(s.scritti)+'</a>';
+    return h+'</div>';
+  }
+  function aggiungiNota(){
+    var c=document.getElementById("let-corpo"); if(!c||!cur) return;
+    var old=document.getElementById("fsa-nota"); if(old) old.remove();
+    c.insertAdjacentHTML("beforeend",notaHtml());
+  }
+  function wrapOpen(name,fn){
+    var orig=window[name]; if(typeof orig!=="function") return;
+    window[name]=function(){ var r=orig.apply(this,arguments); try{ fn.apply(null,arguments); aggiungiNota(); }catch(e){} return r; };
+  }
+  wrapOpen("apri",function(id){ var e=DATA.entries.find(function(x){return x.id===id;}); setCur({t:"e",id:id},"e:"+id,e?titolo(e):id); });
+  wrapOpen("apriPensieri",function(m){ setCur({t:"p",m:m},"p:"+m,titoloMese(m)); });
+  wrapOpen("apriFiore",function(i){ setCur({t:"f",i:i},"f:"+i,titoloFiore(i)); });
+  wrapOpen("apriVangelo",function(key){ setCur({t:"v",key:key},"v:"+key,titoloVangelo(key)); });
+
+  var tsave=null;
+  document.addEventListener("input",function(ev){
+    if(ev.target.id!=="fsa-nota-txt"||!cur) return;
+    var val=ev.target.value; clearTimeout(tsave);
+    tsave=setTimeout(function(){
+      var N=loadN(), it=N[cur.key]||{k:cur.k,t:cur.title};
+      it.x=val.trim(); it.t=cur.title; it.k=cur.k; it.ts=Date.now();
+      if(!it.x&&!it.s) delete N[cur.key]; else N[cur.key]=it;
+      saveN(N); var ok=document.getElementById("fsa-nota-ok"); if(ok){ ok.textContent=L().salvato; setTimeout(function(){ ok.textContent=""; },1800); }
+    },400);
+  });
+  document.addEventListener("click",function(ev){
+    var t=ev.target;
+    if(t.closest("#fsa-segna")&&cur){
+      ev.stopPropagation(); var s=L(), b=document.getElementById("fsa-segna"), on;
+      if(cur.k.t==="e"){ togglePref(cur.k.id); on=PREF.has(cur.k.id); var st=document.getElementById("stella"); if(st){ st.textContent=on?"★":"☆"; st.classList.toggle("on",on); } }
+      else { var N=loadN(), it=N[cur.key]||{k:cur.k,t:cur.title,x:""}; it.s=!it.s; on=it.s; it.t=cur.title; it.k=cur.k; it.ts=Date.now();
+        if(!it.x&&!it.s) delete N[cur.key]; else N[cur.key]=it; saveN(N); }
+      b.classList.toggle("on",on); b.textContent=on?s.segnato:"☆ "+s.segna; return;
+    }
+    var o=t.closest("[data-fsa-open]");
+    if(o){ ev.stopPropagation(); var it2=loadN()[o.getAttribute("data-fsa-open")]; if(!it2) return; var k=it2.k;
+      if(k.t==="e") window.apri(k.id); else if(k.t==="p") window.apriPensieri(k.m); else if(k.t==="f") window.apriFiore(k.i); else if(k.t==="v") window.apriVangelo(k.key); }
+  },true);
+
+  var _vf=window.vFav;
+  window.vFav=function(){
+    var h=_vf.apply(this,arguments), N=loadN(), keys=Object.keys(N).filter(function(k){ var it=N[k]; return it.x||(it.k&&it.k.t!=="e"&&it.s); }).sort(function(a,b){return (N[b].ts||0)-(N[a].ts||0);});
+    if(!keys.length) return h;
+    var s=L(); h+='<div class="sez">✎ '+esc(s.mie)+'</div>';
+    keys.forEach(function(k){ var it=N[k];
+      h+='<div class="fsa-nitem" data-fsa-open="'+esc(k)+'"><b>'+(it.s?"★ ":"")+esc(it.t||"")+'</b>'+(it.x?'<span>'+esc(it.x)+'</span>':"")+'</div>'; });
+    return h;
+  };
+
+  /* ===== Link all'app Scritti FSA nel volume dei Pensieri ===== */
+  var _vl=window.vLibro;
+  window.vLibro=function(){
+    var h=_vl.apply(this,arguments);
+    if(typeof libroVol!=="undefined"&&libroVol==="fio") h+='<div style="margin:6px 14px 24px"><a class="fsa-scritti" href="'+URL_SCRITTI+'" target="_blank" rel="noopener">'+esc(L().scritti)+'</a></div>';
+    return h;
+  };
+
+  /* ===== «Oggi» più semplice: Avvisi in un solo riquadro, senza i quattro pulsanti dei volumi ===== */
+  var _vo=window.vOggi;
+  window.vOggi=function(){
+    var h=_vo.apply(this,arguments);
+    h=h.replace(/<div class="aree">[\s\S]*?<\/div>/,"");
+    var re=/<div class="ics-box">[\s\S]*?<div class="ics-note">[\s\S]*?<\/div><\/div>/g, boxes=h.match(re)||[];
+    if(boxes.length){
+      var first=true;
+      h=h.replace(re,function(){ if(first){ first=false; return '<details class="fsa-avvisi"><summary>🔔 '+esc(L().avvisi)+'</summary>'+boxes.join("")+'</details>'; } return ""; });
+    }
+    return h;
+  };
+
+  render();
+})();
+</script>
+
+<style id="fsa-novita3-css">
+#fsa-qr{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;background:rgba(10,30,56,.82);padding:18px}
+#fsa-qr.on{display:flex}
+#fsa-qr .qbox{width:100%;max-width:380px;max-height:94vh;overflow:auto;background:var(--carta);color:var(--inchiostro);border:1px solid var(--oro);border-radius:14px;padding:22px 20px 18px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+#fsa-qr .qcroce{color:var(--oro);font-size:22px}
+#fsa-qr h2{margin:2px 0 12px;font-size:20px;color:var(--blu);font-weight:600}
+#fsa-qr .qimg{width:min(100%,300px);margin:0 auto 12px;border:1px solid var(--linea,#ddd);border-radius:8px;overflow:hidden;background:#fff;line-height:0}
+#fsa-qr .qimg svg{width:100%;height:auto;display:block}
+#fsa-qr .qtxt{font-size:15px;line-height:1.5;margin:0 0 6px}
+#fsa-qr .qurl{font-size:12px;opacity:.65;margin:0 0 14px;word-break:break-all}
+#fsa-qr .qbtn{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#fsa-qr .qbtn button{font-family:inherit;font-size:15px;padding:10px 18px;border-radius:999px;cursor:pointer;border:1px solid var(--oro);background:transparent;color:var(--inchiostro)}
+#fsa-qr .qbtn .qprim{background:var(--blu);color:#fff;border-color:var(--blu)}
+body.notte #fsa-qr .qbtn .qprim{background:var(--oro);color:#151a24;border-color:var(--oro)}
+</style>
+<script id="fsa-novita3">
+(function(){
+  "use strict";
+  var URL_APP="https://figlidisantanna.github.io/preghiere-fsa/";
+  var SVG="<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 41 41\" shape-rendering=\"crispEdges\"><rect width=\"41\" height=\"41\" fill=\"#fff\"/><path d=\"M4 4h7v1h-7zM13 4h2v1h-2zM16 4h2v1h-2zM20 4h6v1h-6zM27 4h1v1h-1zM30 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM15 5h7v1h-7zM26 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM12 6h1v1h-1zM15 6h3v1h-3zM19 6h7v1h-7zM28 6h1v1h-1zM30 6h1v1h-1zM32 6h3v1h-3zM36 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h2v1h-2zM18 7h3v1h-3zM23 7h2v1h-2zM26 7h3v1h-3zM30 7h1v1h-1zM32 7h3v1h-3zM36 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM12 8h3v1h-3zM19 8h1v1h-1zM21 8h2v1h-2zM25 8h3v1h-3zM30 8h1v1h-1zM32 8h3v1h-3zM36 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h2v1h-2zM17 9h1v1h-1zM19 9h3v1h-3zM24 9h3v1h-3zM30 9h1v1h-1zM36 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h7v1h-7zM12 11h4v1h-4zM19 11h1v1h-1zM22 11h1v1h-1zM25 11h1v1h-1zM4 12h1v1h-1zM6 12h5v1h-5zM13 12h5v1h-5zM19 12h3v1h-3zM26 12h3v1h-3zM30 12h5v1h-5zM4 13h1v1h-1zM6 13h1v1h-1zM11 13h4v1h-4zM20 13h1v1h-1zM22 13h4v1h-4zM27 13h1v1h-1zM30 13h2v1h-2zM33 13h2v1h-2zM36 13h1v1h-1zM6 14h2v1h-2zM9 14h2v1h-2zM14 14h2v1h-2zM19 14h1v1h-1zM22 14h1v1h-1zM24 14h1v1h-1zM28 14h1v1h-1zM30 14h1v1h-1zM32 14h1v1h-1zM34 14h1v1h-1zM4 15h1v1h-1zM6 15h1v1h-1zM9 15h1v1h-1zM14 15h2v1h-2zM18 15h2v1h-2zM25 15h2v1h-2zM32 15h5v1h-5zM4 16h1v1h-1zM8 16h1v1h-1zM10 16h2v1h-2zM14 16h2v1h-2zM22 16h1v1h-1zM26 16h4v1h-4zM31 16h3v1h-3zM35 16h2v1h-2zM5 17h4v1h-4zM11 17h1v1h-1zM15 17h6v1h-6zM24 17h1v1h-1zM27 17h2v1h-2zM30 17h1v1h-1zM33 17h1v1h-1zM35 17h2v1h-2zM4 18h1v1h-1zM8 18h1v1h-1zM10 18h3v1h-3zM14 18h2v1h-2zM18 18h1v1h-1zM22 18h2v1h-2zM25 18h1v1h-1zM29 18h2v1h-2zM32 18h2v1h-2zM35 18h1v1h-1zM7 19h1v1h-1zM14 19h2v1h-2zM17 19h1v1h-1zM20 19h1v1h-1zM23 19h4v1h-4zM29 19h2v1h-2zM33 19h2v1h-2zM4 20h1v1h-1zM10 20h1v1h-1zM15 20h1v1h-1zM17 20h2v1h-2zM21 20h3v1h-3zM26 20h1v1h-1zM28 20h2v1h-2zM31 20h3v1h-3zM36 20h1v1h-1zM4 21h2v1h-2zM7 21h1v1h-1zM18 21h1v1h-1zM20 21h8v1h-8zM30 21h2v1h-2zM33 21h2v1h-2zM36 21h1v1h-1zM4 22h2v1h-2zM8 22h1v1h-1zM10 22h1v1h-1zM13 22h1v1h-1zM16 22h4v1h-4zM21 22h1v1h-1zM25 22h1v1h-1zM30 22h3v1h-3zM34 22h2v1h-2zM4 23h1v1h-1zM6 23h2v1h-2zM11 23h1v1h-1zM13 23h1v1h-1zM17 23h1v1h-1zM19 23h4v1h-4zM24 23h4v1h-4zM29 23h1v1h-1zM31 23h5v1h-5zM5 24h1v1h-1zM8 24h1v1h-1zM10 24h1v1h-1zM12 24h1v1h-1zM15 24h1v1h-1zM17 24h4v1h-4zM24 24h1v1h-1zM28 24h2v1h-2zM31 24h3v1h-3zM36 24h1v1h-1zM4 25h5v1h-5zM11 25h1v1h-1zM13 25h2v1h-2zM16 25h2v1h-2zM19 25h1v1h-1zM21 25h2v1h-2zM25 25h1v1h-1zM27 25h1v1h-1zM30 25h1v1h-1zM34 25h1v1h-1zM36 25h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM8 26h4v1h-4zM13 26h1v1h-1zM15 26h7v1h-7zM24 26h1v1h-1zM28 26h2v1h-2zM34 26h2v1h-2zM4 27h1v1h-1zM6 27h1v1h-1zM8 27h2v1h-2zM11 27h1v1h-1zM14 27h1v1h-1zM16 27h1v1h-1zM19 27h1v1h-1zM22 27h1v1h-1zM25 27h4v1h-4zM30 27h1v1h-1zM33 27h2v1h-2zM4 28h1v1h-1zM6 28h2v1h-2zM9 28h7v1h-7zM17 28h1v1h-1zM19 28h3v1h-3zM24 28h1v1h-1zM26 28h1v1h-1zM28 28h6v1h-6zM12 29h2v1h-2zM15 29h1v1h-1zM18 29h1v1h-1zM20 29h1v1h-1zM22 29h3v1h-3zM28 29h1v1h-1zM32 29h1v1h-1zM34 29h1v1h-1zM36 29h1v1h-1zM4 30h7v1h-7zM15 30h2v1h-2zM19 30h2v1h-2zM22 30h1v1h-1zM26 30h3v1h-3zM30 30h1v1h-1zM32 30h1v1h-1zM34 30h2v1h-2zM4 31h1v1h-1zM10 31h1v1h-1zM12 31h3v1h-3zM16 31h1v1h-1zM19 31h1v1h-1zM23 31h6v1h-6zM32 31h3v1h-3zM36 31h1v1h-1zM4 32h1v1h-1zM6 32h3v1h-3zM10 32h1v1h-1zM12 32h1v1h-1zM14 32h2v1h-2zM18 32h1v1h-1zM22 32h2v1h-2zM25 32h1v1h-1zM28 32h6v1h-6zM35 32h2v1h-2zM4 33h1v1h-1zM6 33h3v1h-3zM10 33h1v1h-1zM12 33h4v1h-4zM18 33h3v1h-3zM24 33h2v1h-2zM27 33h3v1h-3zM32 33h1v1h-1zM34 33h3v1h-3zM4 34h1v1h-1zM6 34h3v1h-3zM10 34h1v1h-1zM12 34h2v1h-2zM15 34h1v1h-1zM21 34h1v1h-1zM23 34h1v1h-1zM25 34h1v1h-1zM30 34h2v1h-2zM4 35h1v1h-1zM10 35h1v1h-1zM13 35h2v1h-2zM16 35h3v1h-3zM20 35h1v1h-1zM23 35h5v1h-5zM29 35h1v1h-1zM32 35h3v1h-3zM4 36h7v1h-7zM12 36h1v1h-1zM15 36h1v1h-1zM17 36h2v1h-2zM21 36h1v1h-1zM23 36h1v1h-1zM26 36h4v1h-4zM31 36h1v1h-1zM35 36h1v1h-1z\" fill=\"#123456\"/></svg>";
+  var S={
+    it:{btn:"Condividi l’app con un codice QR",tit:"Preghiere FSA",txt:"Fai inquadrare questo codice con la fotocamera del telefono: si apre l’app.",link:"Invia il link",chiudi:"Chiudi",copiato:"Link copiato"},
+    pt:{btn:"Compartilhar o app com um código QR",tit:"Orações FSA",txt:"Peça que apontem a câmera do telefone para este código: o app se abre.",link:"Enviar o link",chiudi:"Fechar",copiato:"Link copiado"},
+    es:{btn:"Compartir la app con un código QR",tit:"Oraciones FSA",txt:"Pide que enfoquen con la cámara del teléfono este código: se abre la app.",link:"Enviar el enlace",chiudi:"Cerrar",copiato:"Enlace copiado"},
+    en:{btn:"Share the app with a QR code",tit:"Prayers FSA",txt:"Have them point their phone camera at this code: the app opens.",link:"Send the link",chiudi:"Close",copiato:"Link copied"}
+  };
+  function L(){ return S[(typeof lingua!=="undefined"&&S[lingua])?lingua:"it"]; }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  var ov=document.createElement("div"); ov.id="fsa-qr"; ov.setAttribute("role","dialog"); ov.setAttribute("aria-modal","true");
+  document.body.appendChild(ov);
+  function apri(){
+    var s=L();
+    ov.innerHTML='<div class="qbox"><div class="qcroce">✠</div><h2>'+esc(s.tit)+'</h2><div class="qimg">'+SVG+'</div>'+
+      '<p class="qtxt">'+esc(s.txt)+'</p><p class="qurl">'+esc(URL_APP.replace("https://",""))+'</p>'+
+      '<div class="qbtn"><button type="button" class="qprim" data-q="link">'+esc(s.link)+'</button><button type="button" data-q="x">'+esc(s.chiudi)+'</button></div></div>';
+    ov.classList.add("on");
+  }
+  function chiudi(){ ov.classList.remove("on"); }
+  window.__fsaApriQR=apri;
+  ov.addEventListener("click",function(ev){
+    if(ev.target===ov){ chiudi(); return; }
+    var b=ev.target.closest("[data-q]"); if(!b) return;
+    if(b.dataset.q==="x"){ chiudi(); return; }
+    var s=L();
+    if(navigator.share){ navigator.share({title:s.tit,text:s.tit,url:URL_APP}).catch(function(){}); }
+    else { try{ navigator.clipboard.writeText(URL_APP).then(function(){ b.textContent=s.copiato; }); }catch(e){} }
+  });
+  document.addEventListener("click",function(ev){
+    if(ev.target.closest("[data-fsa-qr]")){ ev.stopPropagation(); apri(); }
+  },true);
+  document.addEventListener("click",function(ev){
+    if(ev.target.closest("[data-lang]")) setTimeout(function(){ if(ov.classList.contains("on")) apri(); },0);
+  });
+  var _vo=window.vOggi;
+  window.vOggi=function(){
+    var h=_vo.apply(this,arguments);
+    var m='<button type="button" class="fsa-guida-link" data-fsa-guida="1">';
+    var i=h.indexOf(m);
+    var btn='<button type="button" class="fsa-guida-link" data-fsa-qr="1" style="margin-bottom:0">▦ '+esc(L().btn)+'</button>';
+    return i>-1? h.slice(0,i)+btn+h.slice(i) : h+btn;
+  };
+  render();
+})();
+</script>
+
 <script>
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
