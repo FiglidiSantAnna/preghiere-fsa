@@ -12382,7 +12382,7 @@ render();
 </script>
 
 <style id="fsa-novita-css">
-.fsa-riprendi{display:block;width:calc(100% - 28px);margin:0 14px 16px;padding:13px 16px;text-align:left;font-family:inherit;font-size:15px;color:var(--blu);background:var(--carta);border:1px solid var(--oro);border-radius:10px;cursor:pointer}
+.fsa-riprendi{display:block;width:calc(100% - 28px);margin:18px 14px 16px;padding:13px 16px;text-align:left;font-family:inherit;font-size:15px;color:var(--blu);background:var(--carta);border:1px solid var(--oro);border-radius:10px;cursor:pointer}
 .fsa-riprendi small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--oro);margin-bottom:3px}
 .fsa-riprendi b{font-weight:600}
 .fsa-pimg{display:block;margin:12px auto 0;padding:8px 16px;font-family:inherit;font-size:13px;color:var(--blu);background:transparent;border:1px solid var(--oro);border-radius:999px;cursor:pointer}
@@ -12601,7 +12601,7 @@ body.notte #fsa-guida .gnext{background:var(--oro);color:#151a24;border-color:va
   var _vo=window.vOggi;
   window.vOggi=function(){
     var h=_vo.apply(this,arguments);
-    return riprendiHtml()+h+'<button type="button" class="fsa-guida-link" data-fsa-guida="1">'+esc(L().guida)+'</button>';
+    return h+riprendiHtml()+'<button type="button" class="fsa-guida-link" data-fsa-guida="1">'+esc(L().guida)+'</button>';
   };
   document.addEventListener("click",function(ev){
     var t=ev.target;
